@@ -80,25 +80,25 @@ public class SoapFaultTest extends TestCase {
     /** 
      * 
      * If someone wants to fix this test case, feel free!
-     * 
+     */ 
     public void testFaultSerialize12() throws Throwable {
         KXmlSerializer xmlWriter = new KXmlSerializer();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         xmlWriter.setOutput(outputStream, "UTF-8");
         SoapFault12 fault = generateFaultFromFaultString12(ServiceConnectionFixture.FAULT_STRING_12);
         fault.write(xmlWriter);
-
-        String possibleOutputString = "<n0:Fault xmlns:n0=\"http://www.w3.org/2003/05/soap-envelope\">
-     <n0:Code><n0:Value xmlns:q0=\"http://schemas.xmlsoap.org/envelope/\">q0:Client.AuthenticationFailed</n0:Value>\n" +
-        "</n0:Code><n0:Reason><n0:Text xml:lang=\"en\">Authentication failed</n0:Text>\n" +
-        "</n0:Reason><n0:Detail></n0:Detail></n0:Fault>";
+        xmlWriter.flush();
+        String possibleOutputString = "<n0:Fault xmlns:n0=\"http://www.w3.org/2003/05/soap-envelope\">"
+        		+ "<n0:Code><n0:Value xmlns:q0=\"http://schemas.xmlsoap.org/envelope/\">q0:Client.AuthenticationFailed</n0:Value>\n" +
+        	        "</n0:Code><n0:Reason><n0:Text xml:lang=\"en\">Authentication failed</n0:Text>\n" +
+        	        "</n0:Reason><n0:Detail></n0:Detail></n0:Fault>";
         
         
         String faultString = new String(outputStream.toByteArray());
         assertEquals(possibleOutputString, faultString);
         
     }
-    */
+    
 
     private SoapFault generateFaultFromFaultString(String faultString) throws XmlPullParserException, IOException {
         SoapFault fault = new SoapFault();
